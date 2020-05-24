@@ -934,12 +934,10 @@ set(EXPECTED_DATA
   "languages/japanese.json"
   "languages/korean.json"
   "languages/kyrgyz.json"
-  "languages/license.txt"
   "languages/lithuanian.json"
   "languages/norwegian.json"
   "languages/polish.json"
   "languages/portuguese.json"
-  "languages/readme.txt"
   "languages/romanian.json"
   "languages/russian.json"
   "languages/serbian.json"
@@ -1000,9 +998,7 @@ set(EXPECTED_DATA
   "maps/dm7.map"
   "maps/dm8.map"
   "maps/dm9.map"
-  "maps/license.txt"
   "maps/lms1.map"
-  "maps/readme.txt"
   "particles.png"
   "shield.png"
   "skins/bluekitty.json"
@@ -1459,42 +1455,6 @@ add_custom_target(tools DEPENDS ${TARGETS_TOOLS})
 add_custom_target(everything DEPENDS ${TARGETS_OWN})
 
 ########################################################################
-# TESTS
-########################################################################
-
-if(GTEST_FOUND OR DOWNLOAD_GTEST)
-  set_src(TESTS GLOB src/test
-    fs.cpp
-    git_revision.cpp
-    hash.cpp
-    storage.cpp
-    str.cpp
-    test.cpp
-    test.h
-    thread.cpp
-  )
-  set(TARGET_TESTRUNNER testrunner)
-  add_executable(${TARGET_TESTRUNNER} EXCLUDE_FROM_ALL
-    ${TESTS}
-    $<TARGET_OBJECTS:engine-shared>
-    $<TARGET_OBJECTS:game-shared>
-    ${DEPS}
-  )
-  target_link_libraries(${TARGET_TESTRUNNER} ${LIBS} ${GTEST_LIBRARIES})
-  target_include_directories(${TARGET_TESTRUNNER} PRIVATE ${GTEST_INCLUDE_DIRS})
-
-  list(APPEND TARGETS_OWN ${TARGET_TESTRUNNER})
-  list(APPEND TARGETS_LINK ${TARGET_TESTRUNNER})
-
-  add_custom_target(run_tests
-    COMMAND $<TARGET_FILE:${TARGET_TESTRUNNER}> ${TESTRUNNER_ARGS}
-    COMMENT Running tests
-    DEPENDS ${TARGET_TESTRUNER}
-    USES_TERMINAL
-  )
-endif()
-
-########################################################################
 # INSTALLATION
 ########################################################################
 
@@ -1593,13 +1553,9 @@ set(CPACK_ARCHIVE_PORTABLE_FILE_NAME ${CPACK_PACKAGE_FILE_NAME})
 set(CPACK_SOURCE_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-src)
 set(CPACK_SOURCE_FILES
   CMakeLists.txt
-  bam.lua
   cmake/
-  configure.lua
   datasrc/
-  license.txt
   other/
-  readme.md
   scripts/
   src/
   storage.cfg
@@ -1626,7 +1582,6 @@ set(CPACK_TARGETS
 )
 set(CPACK_DIRS ${PROJECT_BINARY_DIR}/data)
 set(CPACK_FILES
-  license.txt
   storage.cfg
   ${COPY_FILES}
 )

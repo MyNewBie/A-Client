@@ -29,11 +29,7 @@ void CBot::OnConsoleInit()
 
 void CBot::ConPermHook(IConsole::IResult *pResult, void *pUserData) {
     CBot *pSelf = (CBot *)pUserData;
-    if (pSelf->GameClient()->m_pControls->m_InputData.m_Hook) {
-        pSelf->GameClient()->m_pControls->m_InputData.m_Hook = false;
-    } else {
-        pSelf->GameClient()->m_pControls->m_InputData.m_Hook = true;
-    }
+    pSelf->GameClient()->m_pControls->m_InputData.m_Hook = true;
 }
 
 CBot::CBot()
@@ -58,7 +54,6 @@ void CBot::OnReset(){
 
 void CBot::OnRender()
 {
-    m_pClient->m_pControls->m_BotSend = false;
     if(!g_Config.m_Debug) return;
     
     for(int i = 0; i < MAX_CLIENTS; i++)

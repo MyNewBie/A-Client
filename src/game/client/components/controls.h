@@ -11,12 +11,6 @@ public:
 	vec2 m_MousePos;
 	vec2 m_TargetPos;
 
-    bool m_BotSend;
-    bool m_BotFire;
-    bool m_BotHook;
-
-    vec2 m_BotPos;
-
 	CNetObj_PlayerInput m_InputData;
 	CNetObj_PlayerInput m_LastData;
 	int m_InputDirectionLeft;

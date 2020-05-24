@@ -118,13 +118,13 @@ if __name__ == '__main__':
 		if(commenttxt):
 			commenttxt = 'Context: '+commenttxt
 		po.append(polib.POEntry(msgid=msg, msgstr="", occurrences=occurrences, msgctxt=ctxt, comment=commenttxt))
-	po.save('datasrc/languages/base.pot')
+	po.save('data/languages/base.pot')
 
-	for filename in os.listdir("datasrc/languages"):
+	for filename in os.listdir("data/languages"):
 		try:
 			if (os.path.splitext(filename)[1] == ".json"
 					and filename != "index.json"):
-				filename = "datasrc/languages/" + filename
+				filename = "data/languages/" + filename
 				write_languagefile(filename, l10n_src, load_languagefile(filename))
 		except Exception as e:
 			print("Failed on {0}, re-raising for traceback".format(filename))

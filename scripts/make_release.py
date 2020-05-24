@@ -120,8 +120,6 @@ if not maps_dir:
 	sys.exit(-1)
 
 print("adding files")
-shutil.copy("readme.md", package_dir)
-shutil.copy("license.txt", package_dir)
 shutil.copy("storage.cfg", package_dir)
 
 if include_data and not use_bundle:
@@ -138,7 +136,7 @@ if include_exe and not use_bundle:
 	shutil.copy(source_package_dir+name+"_srv"+exe_ext, package_dir)
 	
 if include_src:
-	for p in ["src", "scripts", "datasrc", "other", "objs"]:
+	for p in ["src", "scripts", "data", "other", "objs"]:
 		os.mkdir(os.path.join(package_dir, p))
 		copydir(p, package_dir)
 	shutil.copy("bam.lua", package_dir)

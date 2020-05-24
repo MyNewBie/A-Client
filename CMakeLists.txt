@@ -1098,8 +1098,8 @@ set(EXPECTED_DATA
   "ui/themes/none.png"
 )
 
-if(NOT EXISTS ${PROJECT_SOURCE_DIR}/datasrc/languages/index.json)
-  message(WARNING "Missing datasrc/languages submodule. Please download a source release or update your git submodules with `git submodule update --init`")
+if(NOT EXISTS ${PROJECT_SOURCE_DIR}/data/languages/index.json)
+  message(WARNING "Missing data/languages submodule. Please download a source release or update your git submodules with `git submodule update --init`")
   foreach(item ${EXPECTED_DATA})
     if(item MATCHES "^languages/")
       list(REMOVE_ITEM EXPECTED_DATA ${item})
@@ -1107,8 +1107,8 @@ if(NOT EXISTS ${PROJECT_SOURCE_DIR}/datasrc/languages/index.json)
   endforeach()
 endif()
 
-if(NOT EXISTS ${PROJECT_SOURCE_DIR}/datasrc/maps/dm1.map)
-  message(WARNING "Missing datasrc/maps submodule. Please download a source release or update your git submodules with `git submodule update --init`")
+if(NOT EXISTS ${PROJECT_SOURCE_DIR}/data/maps/dm1.map)
+  message(WARNING "Missing data/maps submodule. Please download a source release or update your git submodules with `git submodule update --init`")
   foreach(item ${EXPECTED_DATA})
     if(item MATCHES "^maps/")
       list(REMOVE_ITEM EXPECTED_DATA ${item})
@@ -1116,15 +1116,15 @@ if(NOT EXISTS ${PROJECT_SOURCE_DIR}/datasrc/maps/dm1.map)
   endforeach()
 endif()
 
-# set_glob(DATA GLOB_RECURSE "json;map;png;rules;ttf;txt;wv" datasrc ${EXPECTED_DATA})
-set_glob(DATA GLOB_RECURSE "json;map;png;rules;ttf;txt;wv" datasrc)
+# set_glob(DATA GLOB_RECURSE "json;map;png;rules;ttf;txt;wv" data ${EXPECTED_DATA})
+set_glob(DATA GLOB_RECURSE "json;map;png;rules;ttf;txt;wv" data)
 
 ########################################################################
 # COPY DATA AND DLLS
 ########################################################################
 
 foreach(datafile ${DATA})
-  file(RELATIVE_PATH OUT ${PROJECT_SOURCE_DIR}/datasrc ${datafile})
+  file(RELATIVE_PATH OUT ${PROJECT_SOURCE_DIR}/data ${datafile})
   get_filename_component(DESTINATION data/${OUT} PATH)
   file(MAKE_DIRECTORY ${DESTINATION})
   file(COPY ${datafile} DESTINATION ${DESTINATION})
@@ -1150,13 +1150,13 @@ endfunction()
 
 function(generate_source output_file script_parameter)
   add_custom_command(OUTPUT ${output_file}
-    COMMAND ${PYTHON_EXECUTABLE} datasrc/compile.py ${script_parameter}
+    COMMAND ${PYTHON_EXECUTABLE} data/compile.py ${script_parameter}
       > "${PROJECT_BINARY_DIR}/${output_file}"
     DEPENDS
-      datasrc/compile.py
-      datasrc/content.py
-      datasrc/datatypes.py
-      datasrc/network.py
+      data/compile.py
+      data/content.py
+      data/datatypes.py
+      data/network.py
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   )
 endfunction()
@@ -1554,7 +1554,7 @@ set(CPACK_SOURCE_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION
 set(CPACK_SOURCE_FILES
   CMakeLists.txt
   cmake/
-  datasrc/
+  data/
   other/
   scripts/
   src/

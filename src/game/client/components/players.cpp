@@ -62,6 +62,8 @@ void CPlayers::RenderHook(
 
 	float IntraTick = Client()->IntraGameTick();
 
+    bool Local = m_pClient->m_LocalClientID == ClientID;
+
 	// set size
 	RenderInfo.m_Size = 64.0f;
 
@@ -102,7 +104,7 @@ void CPlayers::RenderHook(
 					HookPos = mix(vec2(m_pClient->m_PredictedPrevChar.m_Pos.x, m_pClient->m_PredictedPrevChar.m_Pos.y),
 						vec2(m_pClient->m_PredictedChar.m_Pos.x, m_pClient->m_PredictedChar.m_Pos.y), Client()->PredIntraGameTick());
 			}
-			else if(m_pClient->m_LocalClientID == ClientID)
+			else if(Local)
 			{
 				HookPos = mix(vec2(m_pClient->m_Snap.m_aCharacters[pPlayerChar->m_HookedPlayer].m_Prev.m_X,
 					m_pClient->m_Snap.m_aCharacters[pPlayerChar->m_HookedPlayer].m_Prev.m_Y),
@@ -219,6 +221,15 @@ void CPlayers::RenderPlayer(
 		}
 	}
 
+	bool OtherTeam;
+
+    int LocalTeam = m_pClient->m_aClients[m_pClient->m_LocalClientID].m_Team;
+
+	if (LocalTeam == TEAM_SPECTATORS)
+		OtherTeam = false;
+    else
+		OtherTeam = m_pClient->m_aClients[ClientID].m_Team != LocalTeam;
+
 	vec2 Direction = direction(Angle);
 	vec2 Position = mix(vec2(Prev.m_X, Prev.m_Y), vec2(Player.m_X, Player.m_Y), IntraTick);
 	vec2 Vel = mix(vec2(Prev.m_VelX/256.0f, Prev.m_VelY/256.0f), vec2(Player.m_VelX/256.0f, Player.m_VelY/256.0f), IntraTick);
@@ -231,8 +242,9 @@ void CPlayers::RenderPlayer(
 
 	RenderInfo.m_GotAirJump = Player.m_Jumped&2?0:1;
 
-	if (g_Config.m_ClFlash && !Local) {
-        const int Size = 48;
+	if (g_Config.m_ClFlash && !Local && !OtherTeam) {
+        float Size = 48;
+
         bool flash = time_get()/(time_freq()/10)%2 == 0;
 
         Graphics()->TextureClear();
@@ -241,7 +253,9 @@ void CPlayers::RenderPlayer(
             Graphics()->SetColor(0.9, 0.2f, 0.2f, 1);
         else
             Graphics()->SetColor(0.2, 0.5f, 0.2f, 1);
+
         IGraphics::CQuadItem QuadItem(Position.x-Size/2, Position.y-Size/2, Size, Size);
+
         Graphics()->QuadsDrawTL(&QuadItem, 1);
         Graphics()->SetColor(1,1,1,1);
         Graphics()->QuadsEnd();
@@ -265,9 +279,23 @@ void CPlayers::RenderPlayer(
 
     if (!Local) {
         if (length(Vel*50) > 2000.0f && InAir) {
-            m_pClient->m_pControls->m_InputData.m_Jump = true;
+            //m_pClient->m_pControls->m_InputData.m_Jump = true;
         }
     } else {
+        if (g_Config.m_ClHookSpam) {
+            bool period = time_get()/(time_freq()/g_Config.m_ClHookSpamPeriod)%2 == 0;
+            if (period) {
+                bool speed = time_get()/(time_freq()/g_Config.m_ClHookSpamSpeed)%2 == 0;
+                m_pClient->m_pControls->m_InputData.m_Hook = speed;
+            }
+        }
+        if (g_Config.m_ClFireSpam) {
+            bool period = time_get()/(time_freq()/g_Config.m_ClFireSpamPeriod)%2 == 0;
+            if (period) {
+                bool speed = time_get()/(time_freq()/g_Config.m_ClFireSpamSpeed)%2 == 0;
+                m_pClient->m_pControls->m_InputData.m_Fire = speed;
+            }
+        }
         if (g_Config.m_ClSpin) {
             int dir = 0;
             bool s = time_get()/(time_freq()/g_Config.m_ClSpinSpeed)%2 == 0;
@@ -286,26 +314,6 @@ void CPlayers::RenderPlayer(
                     GameClient()->m_pChat->Say(0, aBuf);
                 }*/
             }
-        }
-        if (g_Config.m_ClHookSpam) {
-            bool hook;
-            bool s = time_get()/(time_freq()/g_Config.m_ClHookSpamSpeed)%2 == 0;
-            if (s) {
-                hook = true;
-            }else{
-                hook = false;
-            }
-            m_pClient->m_pControls->m_InputData.m_Hook = hook;
-        }
-        if (g_Config.m_ClFireSpam) {
-            bool fire;
-            bool s = time_get()/(time_freq()/g_Config.m_ClFireSpamSpeed)%2 == 0;
-            if (s) {
-                fire = true;
-            }else{
-                fire = false;
-            }
-            m_pClient->m_pControls->m_InputData.m_Fire = fire;
         }
     }
 
@@ -625,9 +633,9 @@ void CPlayers::RenderPlayer(
 	RenderTools()->RenderTee(&State, &RenderInfo, Player.m_Emote, Direction, Position);
 
 	// gamer: render health bar
-	if(m_pClient->m_LocalClientID == ClientID && g_Config.m_GfxHealthBar)
+	if(g_Config.m_GfxHealthBar && Local)
 	{
-		RenderHealthBar(Position, 
+		RenderHealthBar(Position,
 			m_pClient->m_Snap.m_pLocalCharacter->m_Health,
 			m_pClient->m_Snap.m_pLocalCharacter->m_Armor,
 			m_pClient->m_Snap.m_pLocalCharacter->m_AmmoCount,
@@ -787,7 +795,6 @@ void CPlayers::RenderHealthBar(vec2 Position, int hp, int armor, int Ammo, int W
 			q.h = Scale;
 			RenderTools()->DrawUIRect(&q, c, 0, 1.0f);
 		}
-		
 
 		const vec4 HealthColor = vec4(color.r, color.g, color.b, 1.0f);
 		const vec4 ArmorColor = vec4(0.9f, 0.6f, 0.1f, 1.0f);
@@ -927,8 +934,6 @@ void CPlayers::OnRender()
 					if(IsTeamplay)
 					{
 						m_aRenderInfo[i].m_aTextures[p] = pNinja->m_apParts[p]->m_ColorTexture;
-						// int ColorVal = m_pClient->m_pSkins->GetTeamColor(true, pNinja->m_aPartColors[p], m_pClient->m_aClients[i].m_Team, p);
-						// teecomp
 						const int LocalTeam = m_pClient->m_aClients[m_pClient->m_LocalClientID].m_Team;
 						int TeamColorHSL = CTeecompUtils::GetTeamColorInt(m_pClient->m_aClients[i].m_Team, LocalTeam, g_Config.m_TcColoredTeesTeam1Hsl,
 							g_Config.m_TcColoredTeesTeam2Hsl, g_Config.m_TcColoredTeesMethod);

@@ -5,14 +5,18 @@
 #undef GAME_VARIABLES_H // this file will be included several times
 
 // client
+MACRO_CONFIG_INT(ClAimBotLimit, cl_aimbot_limit, 100, 0, 1000, CFGFLAG_CLIENT|CFGFLAG_SAVE, "AimBot Limit")
+MACRO_CONFIG_INT(ClAimBot, cl_aimbot, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "AimBot")
 MACRO_CONFIG_INT(ClMapForceNight, cl_map_force_night, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Force night")
-MACRO_CONFIG_INT(ClFireSpamSpeed, cl_firespam_speed, 12, 0, 30, CFGFLAG_CLIENT|CFGFLAG_SAVE, "FireSpam Speed")
+MACRO_CONFIG_INT(ClFireSpamPeriod, cl_firespam_period, 12, 1, 30, CFGFLAG_CLIENT|CFGFLAG_SAVE, "FireSpam Period")
+MACRO_CONFIG_INT(ClFireSpamSpeed, cl_firespam_speed, 12, 1, 30, CFGFLAG_CLIENT|CFGFLAG_SAVE, "FireSpam Speed")
 MACRO_CONFIG_INT(ClFireSpam, cl_firespam, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "FireSpam")
-MACRO_CONFIG_INT(ClHookSpamSpeed, cl_hookspam_speed, 12, 0, 30, CFGFLAG_CLIENT|CFGFLAG_SAVE, "HookSpam Speed")
+MACRO_CONFIG_INT(ClHookSpamPeriod, cl_hookspam_period, 12, 1, 30, CFGFLAG_CLIENT|CFGFLAG_SAVE, "HookSpam Period")
+MACRO_CONFIG_INT(ClHookSpamSpeed, cl_hookspam_speed, 12, 1, 70, CFGFLAG_CLIENT|CFGFLAG_SAVE, "HookSpam Speed")
 MACRO_CONFIG_INT(ClHookSpam, cl_hookspam, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "HookSpam")
-MACRO_CONFIG_INT(ClSpinSpeed, cl_spin_speed, 16, 0, 30, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Spin Speed")
+MACRO_CONFIG_INT(ClSpinSpeed, cl_spin_speed, 16, 1, 40, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Spin Speed")
 MACRO_CONFIG_INT(ClSpin, cl_spin, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Spin")
-MACRO_CONFIG_INT(ClFlash, cl_flash, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Flash")
+MACRO_CONFIG_INT(ClFlash, cl_flash, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Flash")
 MACRO_CONFIG_INT(ClPredict, cl_predict, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Predict client movements")
 MACRO_CONFIG_INT(ClNameplates, cl_nameplates, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Show name plates")
 MACRO_CONFIG_INT(ClNameplatesAlways, cl_nameplates_always, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Always show name plates disregarding of distance")

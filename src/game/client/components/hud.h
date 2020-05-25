@@ -18,6 +18,7 @@ class CHud : public CComponent
 	void RenderFps();
 	void RenderConnectionWarning();
 	void RenderTeambalanceWarning();
+    void RenderHacks();
 	void RenderVoting();
 	void RenderNinjaBar(float x, float y, float Progress);
 	void RenderHealthAndAmmo(const CNetObj_Character *pCharacter);

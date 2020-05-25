@@ -20,8 +20,6 @@
 #include "controls.h"
 #include "players.h"
 
-//const char * gamemod;
-
 void CBot::OnConsoleInit()
 {
 	Console()->Register("+permhook", "", CFGFLAG_CLIENT, ConPermHook, this, "PermHook");
@@ -54,7 +52,7 @@ void CBot::OnReset(){
 
 void CBot::OnRender()
 {
-    if(!g_Config.m_Debug) return;
+    if(!g_Config.m_ClAimBot) return;
     
     for(int i = 0; i < MAX_CLIENTS; i++)
     {
@@ -63,6 +61,15 @@ void CBot::OnRender()
 
         CGameClient::CClientData cData = m_pClient->m_aClients[i];
                 
+        bool OtherTeam;
+
+        int LocalTeam = m_pClient->m_aClients[m_pClient->m_LocalClientID].m_Team;
+
+        if (LocalTeam == TEAM_SPECTATORS)
+            OtherTeam = false;
+        else
+            OtherTeam = m_pClient->m_aClients[i].m_Team != LocalTeam;
+
         bool Spec = m_pClient->m_Snap.m_SpecInfo.m_Active;
 
         if(!m_pClient->m_Snap.m_aCharacters[i].m_Active || cData.m_Team == TEAM_SPECTATORS || m_pClient->m_LocalClientID == i || Spec/* || (str_comp(gamemod, "zCatch") == 0 && cData.m_Team == m_pClient->m_aClients[m_pClient->m_LocalClientID].m_Team)*/)
@@ -88,10 +95,17 @@ void CBot::OnRender()
         vec2 m_Pos = m_pClient->m_LocalCharacterPos;
         
         vec2 enemyPos = vec2(160 * (Position.x - m_Pos.x) / sqrt((Position.x - m_Pos.x)*(Position.x - m_Pos.x) + (Position.y - m_Pos.y)*(Position.y - m_Pos.y)), 160 * (Position.y - m_Pos.y) / sqrt((Position.x - m_Pos.x)*(Position.x - m_Pos.x) + (Position.y - m_Pos.y)*(Position.y - m_Pos.y)));
+        
+        enemyPos = GetGrenadeAngle(m_Pos, enemyPos) + m_Pos;
 
-        if (m_pClient->m_pControls->m_InputData.m_Fire) {
-            enemyPos = GetGrenadeAngle(m_Pos, enemyPos) + m_Pos;
-        }
+        float Size = 32;
+        Graphics()->TextureClear();
+    Graphics()->QuadsBegin();
+    Graphics()->SetColor(0.5f, 0.2f, 0.2f, 1);
+    IGraphics::CQuadItem QuadItem(enemyPos.x-Size/2, enemyPos.y-110, Size, Size);
+    Graphics()->QuadsDrawTL(&QuadItem, 1);
+    Graphics()->SetColor(1,1,1,1);
+    Graphics()->QuadsEnd();
 
         vec2 Direction = direction(angle(enemyPos));
 
@@ -102,37 +116,37 @@ void CBot::OnRender()
         bool doBreak = false;
         int Hit = 0;
 
-			do {
-				OldPos = NewPos;
-				NewPos = OldPos + Direction * m_pClient->m_Tuning.m_HookFireSpeed;
+        do {
+            OldPos = NewPos;
+            NewPos = OldPos + Direction * m_pClient->m_Tuning.m_HookFireSpeed;
 
-				if (distance(m_Pos, NewPos) > m_pClient->m_Tuning.m_HookLength)
-				{
-					NewPos = m_Pos + normalize(NewPos-m_Pos) * m_pClient->m_Tuning.m_HookLength;
-					doBreak = true;
-				}
+            if (distance(m_Pos, NewPos) > m_pClient->m_Tuning.m_HookLength)
+            {
+                NewPos = m_Pos + normalize(NewPos-m_Pos) * m_pClient->m_Tuning.m_HookLength;
+                doBreak = true;
+            }
 
-				int teleNr = 0;
-				Hit = Collision()->IntersectLineTeleHook(OldPos, NewPos, &finishPos, 0x0, &teleNr);
+            int teleNr = 0;
+            Hit = Collision()->IntersectLineTeleHook(OldPos, NewPos, &finishPos, 0x0, &teleNr);
                 
-                if(Hit)
-					break;
+            if(Hit)
+                break;
 
-                NewPos.x = round_to_int(NewPos.x);
-				NewPos.y = round_to_int(NewPos.y);
+            NewPos.x = round_to_int(NewPos.x);
+            NewPos.y = round_to_int(NewPos.y);
 
-				if (OldPos == NewPos)
-					break;
+            if (OldPos == NewPos)
+                break;
 
-				Direction.x = round_to_int(Direction.x*256.0f) / 256.0f;
-				Direction.y = round_to_int(Direction.y*256.0f) / 256.0f;
-			} while (!doBreak);
+            Direction.x = round_to_int(Direction.x*256.0f) / 256.0f;
+            Direction.y = round_to_int(Direction.y*256.0f) / 256.0f;
+        } while (!doBreak);
 
-        if (Hit || OldPos == NewPos) continue;
+        if (Hit || OtherTeam) continue;
 
         if(distance(m_Pos, Position) <= m_pClient->m_Tuning.m_HookLength)
         {
-            if (length(m_Vel*50) > 100.0f) {
+            if (length(m_Vel*50) > g_Config.m_ClAimBotLimit) {
                 m_pClient->m_pControls->m_MousePos = enemyPos;
             }
         }

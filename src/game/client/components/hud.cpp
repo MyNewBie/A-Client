@@ -1011,6 +1011,7 @@ void CHud::OnRender()
 				RenderRaceTime(m_pClient->m_Snap.m_paPlayerInfosRace[m_pClient->m_LocalClientID]);
 				RenderCheckpoint();
 			}
+			RenderHacks();
 		}
 		else if(m_pClient->m_Snap.m_SpecInfo.m_Active)
 		{
@@ -1041,4 +1042,8 @@ void CHud::OnRender()
 		RenderVoting();
 	}
 	RenderCursor();
+}
+
+void CHud::RenderHacks() {
+    
 }

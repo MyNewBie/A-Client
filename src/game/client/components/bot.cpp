@@ -131,19 +131,19 @@ void CBot::OnRender()
 
         if (Hit || OtherTeam) continue;
 
-        bool exists = std::find(std::begin(ids), std::end(ids), i) != std::end(ids);
+        //bool exists = std::find(std::begin(ids), std::end(ids), i) != std::end(ids);
 
-        if(distance(m_Pos, Position) <= m_pClient->m_Tuning.m_HookLength*2 && !exists)
+        if(distance(m_Pos, Position) <= m_pClient->m_Tuning.m_HookLength*2/* && !exists*/)
         {
             if (length(m_Vel*50) >= g_Config.m_ClAimBotLimit/2) {
                 m_pClient->m_pControls->m_MousePos = enemyPos;
-                if (length(m_Vel*50) >= 100) {
+                /*if (length(m_Vel*50) >= 100) {
                     m_pClient->m_pControls->m_InputData.m_Hook = true;
-                }
+                }*/
             }
-            ids[i] = i;
-        } else if (exists) {
-            std::remove(std::begin(ids), std::end(ids), i);
+            //ids[i] = i;
+        /*} else if (exists) {
+            std::remove(std::begin(ids), std::end(ids), i);*/
         }
     }
 }

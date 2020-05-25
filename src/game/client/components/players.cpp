@@ -175,8 +175,6 @@ void CPlayers::RenderPlayer(
 		Player.m_Angle += 2*pi*256;
 	float Angle = mix((float)Prev.m_Angle, (float)Player.m_Angle, IntraTick)/256.0f;
 
-	//float angle = 0;
-
 	if(Local && Client()->State() != IClient::STATE_DEMOPLAYBACK)
 	{
 		// just use the direct input if it's local player we are rendering
@@ -261,7 +259,7 @@ void CPlayers::RenderPlayer(
         Graphics()->QuadsEnd();
     }
 
-    float Size = 32.0f;
+    /*float Size = 32.0f;
     
     if (Player.m_Weapon == WEAPON_GRENADE) {
         Size = 8 * m_pClient->m_Snap.m_aCharacters[ClientID].m_Cur.m_AmmoCount;
@@ -275,12 +273,12 @@ void CPlayers::RenderPlayer(
     IGraphics::CQuadItem QuadItem(Position.x-Size/2, Position.y-110, Size, Size);
     Graphics()->QuadsDrawTL(&QuadItem, 1);
     Graphics()->SetColor(1,1,1,1);
-    Graphics()->QuadsEnd();
+    Graphics()->QuadsEnd();*/
 
     if (!Local) {
-        if (length(Vel*50) > 2000.0f && InAir) {
-            //m_pClient->m_pControls->m_InputData.m_Jump = true;
-        }
+        /*if (length(Vel*50) > 2000.0f && InAir) {
+            m_pClient->m_pControls->m_InputData.m_Jump = true;
+        }*/
     } else {
         if (g_Config.m_ClHookSpam) {
             bool period = time_get()/(time_freq()/g_Config.m_ClHookSpamPeriod)%2 == 0;
@@ -296,24 +294,24 @@ void CPlayers::RenderPlayer(
                 m_pClient->m_pControls->m_InputData.m_Fire = speed;
             }
         }
-        if (g_Config.m_ClSpin) {
-            int dir = 0;
-            bool s = time_get()/(time_freq()/g_Config.m_ClSpinSpeed)%2 == 0;
-            if (s) {
-                dir = -100;
-            }else{
-                dir = 100;
+        if (g_Config.m_ClSpin && g_Config.m_ClAimBot) {
+            bool period = time_get()/(time_freq()/g_Config.m_ClSpinPeriod)%2 == 0;
+            if (period) {
+                int dir = 0;
+                bool s = time_get()/(time_freq()/g_Config.m_ClSpinSpeed)%2 == 0;
+                if (s) {
+                    dir = -100;
+                }else{
+                    dir = 100;
+                }
+                m_pClient->m_pControls->m_MousePos.x = dir;
             }
-            m_pClient->m_pControls->m_MousePos.x = dir;
-            //m_pClient->m_pControls->m_BotSend = true;
-            if (Player.m_Weapon == WEAPON_NINJA) {
-                /*if (GameClient()->m_pChat != null) {
-                    char aBuf[32];
-                    //str_format(aBuf, sizeof(aBuf), "/emote %s %d", s_apEmoteMapping[Emote], g_Config.m_ClEyeDuration);
-                    str_format(aBuf, sizeof(aBuf), "thanks for blocking me");
-                    GameClient()->m_pChat->Say(0, aBuf);
-                }*/
-            }
+        }
+        if (m_pClient->IsFDDRace() && Player.m_Weapon == WEAPON_NINJA) {
+            char aBuf[32];
+            GameClient()->Console()->ExecuteLine("kill");
+            str_format(aBuf, sizeof(aBuf), "say thanks for blocking me");
+            GameClient()->Console()->ExecuteLine(aBuf);
         }
     }
 
@@ -404,8 +402,8 @@ void CPlayers::RenderPlayer(
 	// draw gun
     {
         float Alpha = 1.0f;
-        //if (OtherTeam)
-            //Alpha = g_Config.m_ClShowOthersAlpha / 100.0f;
+        if (OtherTeam)
+            Alpha = g_Config.m_ClShowOthersAlpha / 100.0f;
 
         vec2 ExDirection = Direction;
 

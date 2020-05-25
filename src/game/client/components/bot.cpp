@@ -37,18 +37,8 @@ CBot::CBot()
 }
 
 void CBot::OnReset(){
-    
+    g_Config.m_ClAimBot = false;
 }
-
-/*void CBot::OnStateChange(int NewState, int OldState)
-{
-    CServerInfo CurrentServerInfo;
-	Client()->GetServerInfo(&CurrentServerInfo);
-    gamemod = CurrentServerInfo.m_aGameType;
-	if(str_comp(, "DM") != 0
-        
-        Collision()->GetMapIndex(vec2(m_Snap.m_pLocalCharacter->m_X, m_Snap.m_pLocalCharacter->m_Y))
-}*/
 
 void CBot::OnRender()
 {
@@ -96,16 +86,9 @@ void CBot::OnRender()
         
         vec2 enemyPos = vec2(160 * (Position.x - m_Pos.x) / sqrt((Position.x - m_Pos.x)*(Position.x - m_Pos.x) + (Position.y - m_Pos.y)*(Position.y - m_Pos.y)), 160 * (Position.y - m_Pos.y) / sqrt((Position.x - m_Pos.x)*(Position.x - m_Pos.x) + (Position.y - m_Pos.y)*(Position.y - m_Pos.y)));
         
-        enemyPos = GetGrenadeAngle(m_Pos, enemyPos) + m_Pos;
-
-        float Size = 32;
-        Graphics()->TextureClear();
-    Graphics()->QuadsBegin();
-    Graphics()->SetColor(0.5f, 0.2f, 0.2f, 1);
-    IGraphics::CQuadItem QuadItem(enemyPos.x-Size/2, enemyPos.y-110, Size, Size);
-    Graphics()->QuadsDrawTL(&QuadItem, 1);
-    Graphics()->SetColor(1,1,1,1);
-    Graphics()->QuadsEnd();
+        /*if (m_pClient->m_pControls->m_InputData.m_Fire) {
+            enemyPos = GetGrenadeAngle(m_Pos, enemyPos) + m_Pos;
+        }*/
 
         vec2 Direction = direction(angle(enemyPos));
 
@@ -146,7 +129,7 @@ void CBot::OnRender()
 
         if(distance(m_Pos, Position) <= m_pClient->m_Tuning.m_HookLength)
         {
-            if (length(m_Vel*50) > g_Config.m_ClAimBotLimit) {
+            if (length(m_Vel*50) >= g_Config.m_ClAimBotLimit/2) {
                 m_pClient->m_pControls->m_MousePos = enemyPos;
             }
         }

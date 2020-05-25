@@ -19,7 +19,7 @@ void CMotd::Clear()
 
 bool CMotd::IsActive()
 {
-	// dont render modt if the menu is active
+	// dont render motd if the menu is active
 	if(m_pClient->m_pMenus->IsActive())
 		return false;
 	return time_get() < m_ServerMotdTime;
@@ -99,4 +99,3 @@ bool CMotd::OnInput(IInput::CEvent Event)
 	}
 	return false;
 }
-

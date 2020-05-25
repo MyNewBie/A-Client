@@ -2,6 +2,7 @@
 /* If you are missing that file, acquire a complete release at teeworlds.com.                */
 #ifndef GAME_CLIENT_COMPONENTS_CONSOLE_H
 #define GAME_CLIENT_COMPONENTS_CONSOLE_H
+
 #include <engine/shared/ringbuffer.h>
 #include <game/client/component.h>
 #include <game/client/lineinput.h>
@@ -105,4 +106,5 @@ public:
 	virtual void OnMessage(int MsgType, void *pRawMsg);
 	virtual bool OnInput(IInput::CEvent Events);
 };
+
 #endif

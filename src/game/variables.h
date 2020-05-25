@@ -14,6 +14,7 @@ MACRO_CONFIG_INT(ClFireSpam, cl_firespam, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, 
 MACRO_CONFIG_INT(ClHookSpamPeriod, cl_hookspam_period, 12, 1, 30, CFGFLAG_CLIENT|CFGFLAG_SAVE, "HookSpam Period")
 MACRO_CONFIG_INT(ClHookSpamSpeed, cl_hookspam_speed, 12, 1, 70, CFGFLAG_CLIENT|CFGFLAG_SAVE, "HookSpam Speed")
 MACRO_CONFIG_INT(ClHookSpam, cl_hookspam, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "HookSpam")
+MACRO_CONFIG_INT(ClSpinPeriod, cl_spin_period, 12, 1, 30, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Spin Period")
 MACRO_CONFIG_INT(ClSpinSpeed, cl_spin_speed, 16, 1, 40, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Spin Speed")
 MACRO_CONFIG_INT(ClSpin, cl_spin, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Spin")
 MACRO_CONFIG_INT(ClFlash, cl_flash, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Flash")

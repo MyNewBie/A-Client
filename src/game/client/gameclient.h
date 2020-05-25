@@ -293,10 +293,16 @@ public:
 	// Gamer hooks
 	bool m_FirstBlood;
 	bool m_IsWarmupping;
+
 	bool m_Instagib;
+    bool m_FDDRace;
     bool m_zCatch;
-	virtual bool IsInstagib() const { return m_Instagib; }
-	virtual bool IsZcatch() const { return m_zCatch; }
+    bool m_gCTF;
+
+    virtual bool IsInstagib() const { return m_Instagib; }
+	virtual bool IsFDDRace() const { return m_FDDRace; }
+	virtual bool IszCatch() const { return m_zCatch; }
+	virtual bool IsgCTF() const { return m_gCTF; }
 	// void RegisterStats();
 
 	// stats hooks (Teecomp)

@@ -785,7 +785,6 @@ void CHud::RenderSpectatorHud()
 	CTextCursor Cursor;
 	TextRender()->SetCursor(&Cursor, m_Width-Width+6.0f, m_Height-13.0f, 8.0f, TEXTFLAG_RENDER);
 
-
 	if(g_Config.m_GfxSpecZoom == 100)
 		str_format(aBuf, sizeof(aBuf), "%s: ", Localize("Spectate"));
 	else
@@ -811,7 +810,6 @@ void CHud::RenderSpectatorHud()
 			str_format(aBuf, sizeof(aBuf), "%s", aFlag);
 		break;
 	}
-	
 
 	if(SpecMode == SPEC_PLAYER || SpecID != -1)
 		RenderTools()->DrawClientID(TextRender(), &Cursor, SpecID);
@@ -1025,13 +1023,13 @@ void CHud::OnRender()
 				}
 			}
 			RenderSpectatorHud();
-			RenderSpectatorNotification();
+			//RenderSpectatorNotification();
 		}
 
 		RenderGameTimer();
 		RenderPauseTimer();
 		RenderStartCountdown();
-		RenderDeadNotification();
+		//RenderDeadNotification();
 		RenderSuddenDeath();
 		RenderScoreHud();
 		RenderWarmupTimer();

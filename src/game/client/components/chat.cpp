@@ -529,7 +529,7 @@ void CChat::OnMessage(int MsgType, void *pRawMsg)
 
 void CChat::AddLine(int ClientID, int Mode, const char *pLine, int TargetID)
 {
-	if(*pLine == 0 || (ClientID >= 0 && (!g_Config.m_ClShowsocial || !m_pClient->m_aClients[ClientID].m_Active || // unknown client
+	if(*pLine == 0 || (ClientID >= 0 && (!m_pClient->m_aClients[ClientID].m_Active || // unknown client
 		m_pClient->m_aClients[ClientID].m_ChatIgnore ||
 		g_Config.m_ClFilterchat == 2 ||
 		(m_pClient->m_LocalClientID != ClientID && g_Config.m_ClFilterchat == 1 && !m_pClient->m_aClients[ClientID].m_Friend))))
@@ -1451,7 +1451,6 @@ int CChat::IdentifyNameParameter(const char* pCommand) const
 	return TargetID;
 }
 
-
 // callback functions for commands
 void CChat::Com_All(CChat *pChatData, const char* pCommand)
 {
@@ -1549,7 +1548,6 @@ void CChat::Com_Befriend(CChat *pChatData, const char* pCommand)
 	pChatData->m_Mode = CHAT_NONE;
 	pChatData->m_pClient->OnRelease();
 }
-
 
 // CChatCommands methods
 CChat::CChatCommands::CChatCommands() : m_pSelectedCommand(0)

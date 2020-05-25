@@ -51,7 +51,11 @@ void CItems::RenderProjectile(const CNetObj_Projectile *pCurrent, int ItemID)
 	vec2 PrevPos = CalcPos(StartPos, StartVel, Curvature, Speed, Ct-0.001f);
 
     /*vec2 m_Pos = m_pClient->m_LocalCharacterPos;
-    vec2 n;
+    if (distance(m_Pos, Pos) < 100) {
+        GameClient()->Console()->ExecuteLine("kill");
+    }*/
+    
+    /*vec2 n;
     float Time = Ct *= Speed;
     n.x = m_Pos.x + StartVel.x*Time;
     n.y = m_Pos.y + StartVel.y*Time + Curvature/10000*(Time*Time);

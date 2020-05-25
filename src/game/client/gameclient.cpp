@@ -428,8 +428,16 @@ void CGameClient::OnUpdate()
 		|| str_find_nocase(CurrentServerInfo.m_aGameType, "ilts")
 		));
     
-    m_zCatch = (CurrentServerInfo.m_aGameType[0] && CurrentServerInfo.m_aGameType[0] == 'z' && 
+    m_zCatch = (
 		   str_find_nocase(CurrentServerInfo.m_aGameType, "zcatch")
+		);
+
+    m_gCTF = (
+		   str_find_nocase(CurrentServerInfo.m_aGameType, "gctf")
+		);
+    
+    m_FDDRace = (
+		   str_find_nocase(CurrentServerInfo.m_aGameType, "f-ddrace")
 		);
 
 	// handle mouse movement

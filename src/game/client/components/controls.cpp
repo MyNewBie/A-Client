@@ -21,7 +21,7 @@ CControls::CControls()
 void CControls::OnReset()
 {
 	m_LastData.m_Direction = 0;
-	m_LastData.m_Hook = 0;
+    m_LastData.m_Hook = 0;
 	// simulate releasing the fire button
 	if((m_LastData.m_Fire&1) != 0)
 		m_LastData.m_Fire++;
@@ -35,7 +35,7 @@ void CControls::OnReset()
 
 void CControls::OnRelease()
 {
-	OnReset();
+	//OnReset();
 }
 
 void CControls::OnPlayerDeath()
@@ -129,7 +129,7 @@ int CControls::SnapInput(int *pData)
 	// we freeze the input if chat or menu is activated
 	if(m_pClient->m_pChat->IsActive() || m_pClient->m_pMenus->IsActive())
 	{
-		OnReset();
+		//OnReset();
 
 		mem_copy(pData, &m_InputData, sizeof(m_InputData));
 
@@ -196,7 +196,7 @@ void CControls::OnRender()
 bool CControls::OnMouseMove(float x, float y)
 {
 	if((m_pClient->m_Snap.m_pGameData && m_pClient->m_Snap.m_pGameData->m_GameStateFlags&(GAMESTATEFLAG_PAUSED|GAMESTATEFLAG_ROUNDOVER|GAMESTATEFLAG_GAMEOVER)) ||
-		(m_pClient->m_Snap.m_SpecInfo.m_Active && m_pClient->m_pChat->IsActive()))
+		(m_pClient->m_Snap.m_SpecInfo.m_Active))
 		return false;
 
 	m_MousePos += vec2(x, y); // TODO: ugly

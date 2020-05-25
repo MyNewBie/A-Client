@@ -1117,7 +1117,6 @@ void CChat::OnRender()
 		if(pLine->m_Mode == CHAT_WHISPER)
 			ShadowColor = ShadowWhisper;
 
-
 		const vec4 ColorSystem(1.0f, 1.0f, 0.5f, Blend);
 		const vec4 ColorWhisper(0.4f, 1.0f, 1.0f, Blend);
 		const vec4 ColorRed(1.0f, 0.5f, 0.5f, Blend);
@@ -1178,7 +1177,6 @@ void CChat::OnRender()
 				Graphics()->QuadsSetSubset(0, 0, 1, 1); // From
 			else
 				dbg_break();
-
 
 			// shadow pass
 			Graphics()->SetColor(ShadowWhisper.r*ShadowWhisper.a*Blend, ShadowWhisper.g*ShadowWhisper.a*Blend,

@@ -307,12 +307,12 @@ void CPlayers::RenderPlayer(
                 m_pClient->m_pControls->m_MousePos.x = dir;
             }
         }
-        if (m_pClient->IsFDDRace() && Player.m_Weapon == WEAPON_NINJA) {
+        /*if (m_pClient->IsFDDRace() && Player.m_Weapon == WEAPON_NINJA) {
             char aBuf[32];
             GameClient()->Console()->ExecuteLine("kill");
             str_format(aBuf, sizeof(aBuf), "say thanks for blocking me");
             GameClient()->Console()->ExecuteLine(aBuf);
-        }
+        }*/
     }
 
 	// evaluate animation

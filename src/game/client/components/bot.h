@@ -10,6 +10,7 @@ class CBot : public CComponent
 {
 public:
     CBot();
+    int ids [64];
     void OnRender();
     void OnReset();
     static void ConPermHook(IConsole::IResult *pResult, void *pUserData);

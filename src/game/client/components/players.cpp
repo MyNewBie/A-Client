@@ -294,7 +294,7 @@ void CPlayers::RenderPlayer(
                 m_pClient->m_pControls->m_InputData.m_Fire = speed;
             }
         }
-        if (g_Config.m_ClSpin && g_Config.m_ClAimBot) {
+        if (g_Config.m_ClSpin && !g_Config.m_ClAimBot) {
             bool period = time_get()/(time_freq()/g_Config.m_ClSpinPeriod)%2 == 0;
             if (period) {
                 int dir = 0;

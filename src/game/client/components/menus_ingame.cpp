@@ -230,6 +230,26 @@ void CMenus::RenderGame(CUIRect MainView)
 			else
 				Client()->DemoRecorder_Stop();
 		}
+
+		ButtonRow.VSplitLeft(m_pClient->m_GameInfo.m_GameFlags& GAMEFLAG_TEAMS ? 3.0f : 10.0f, 0, & ButtonRow);
+		ButtonRow.VSplitLeft(m_pClient->m_GameInfo.m_GameFlags& GAMEFLAG_TEAMS ? ButtonWidth : ButtonWidth + 20.0f, & Button, & ButtonRow);
+
+		static CButtonContainer s_DummyButton;
+		/*if (DummyConnecting)
+		{
+			DoButton_Menu(&s_DummyButton, Localize("Connecting dummy"), 1, &Button);
+		}
+		else */if (DoButton_Menu(&s_DummyButton, Localize("Connect dummy"), 0, &Button))
+		{
+			/*if (!Client()->DummyConnected())
+			{
+				Client()->DummyConnect();
+			}
+			else
+			{
+				Client()->DummyDisconnect(0);
+			}*/
+		}
 	}
 
 	// game options

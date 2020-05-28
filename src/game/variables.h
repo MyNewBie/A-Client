@@ -4,6 +4,15 @@
 #define GAME_VARIABLES_H
 #undef GAME_VARIABLES_H // this file will be included several times
 
+// dummy
+MACRO_CONFIG_STR(DummyName, dummy_name, 16, "a dummy", CFGFLAG_SAVE | CFGFLAG_CLIENT, "Name of the Dummy")
+MACRO_CONFIG_STR(DummyClan, dummy_clan, 12, "", CFGFLAG_SAVE | CFGFLAG_CLIENT, "Clan of the Dummy")
+MACRO_CONFIG_INT(DummyCountry, dummy_country, -1, -1, 1000, CFGFLAG_SAVE | CFGFLAG_CLIENT, "Country of the Dummy")
+MACRO_CONFIG_INT(ClDummy, cl_dummy, 0, 0, 1, CFGFLAG_CLIENT, "0 - player / 1 - dummy")
+MACRO_CONFIG_INT(ClDummyHammer, cl_dummy_hammer, 0, 0, 1, CFGFLAG_CLIENT, "Whether dummy is hammering for a hammerfly")
+MACRO_CONFIG_INT(ClDummyResetOnSwitch, cl_dummy_resetonswitch, 0, 0, 2, CFGFLAG_CLIENT | CFGFLAG_SAVE, "Whether dummy or player should stop pressing keys when you switch. 0 = off, 1 = dummy, 2 = player")
+MACRO_CONFIG_INT(ClDummyCopyMoves, cl_dummy_copy_moves, 0, 0, 1, CFGFLAG_CLIENT, "Wether dummy should copy your moves")
+
 // client
 MACRO_CONFIG_INT(ClShowHookColl, cl_show_hook_coll, 0, 0, 1, CFGFLAG_CLIENT | CFGFLAG_SAVE, "Hook colls")
 MACRO_CONFIG_INT(ClAimBotLimit, cl_aimbot_limit, 100, 0, 1000, CFGFLAG_CLIENT|CFGFLAG_SAVE, "AimBot Limit")

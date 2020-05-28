@@ -5,6 +5,7 @@
 #undef GAME_VARIABLES_H // this file will be included several times
 
 // client
+MACRO_CONFIG_INT(ClShowHookColl, cl_show_hook_coll, 0, 0, 1, CFGFLAG_CLIENT | CFGFLAG_SAVE, "Hook colls")
 MACRO_CONFIG_INT(ClAimBotLimit, cl_aimbot_limit, 100, 0, 1000, CFGFLAG_CLIENT|CFGFLAG_SAVE, "AimBot Limit")
 MACRO_CONFIG_INT(ClAimBot, cl_aimbot, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "AimBot")
 MACRO_CONFIG_INT(ClMapForceNight, cl_map_force_night, 1, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "Force night")

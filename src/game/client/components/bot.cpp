@@ -35,13 +35,12 @@ void CBot::ConPermHook(IConsole::IResult *pResult, void *pUserData) {
 
 CBot::CBot()
 {
-    //BOT FİRE
-    //BOT HOOK
-    //cache
 }
 
 void CBot::OnReset(){
     g_Config.m_ClAimBot = false;
+    g_Config.m_ClFireSpam = false;
+    g_Config.m_ClHookSpam = false;
 }
 
 void CBot::OnRender()
@@ -66,8 +65,7 @@ void CBot::OnRender()
 
         bool Spec = m_pClient->m_Snap.m_SpecInfo.m_Active;
 
-        if(!m_pClient->m_Snap.m_aCharacters[i].m_Active || cData.m_Team == TEAM_SPECTATORS || m_pClient->m_LocalClientID == i || Spec/* || (str_comp(gamemod, "zCatch") == 0 && cData.m_Team == m_pClient->m_aClients[m_pClient->m_LocalClientID].m_Team)*/)
-        {
+        if(!m_pClient->m_Snap.m_aCharacters[i].m_Active || cData.m_Team == TEAM_SPECTATORS || m_pClient->m_LocalClientID == i || Spec){
             continue;
         }
 
@@ -89,10 +87,6 @@ void CBot::OnRender()
         vec2 m_Pos = m_pClient->m_LocalCharacterPos;
         
         vec2 enemyPos = vec2(160 * (Position.x - m_Pos.x) / sqrt((Position.x - m_Pos.x)*(Position.x - m_Pos.x) + (Position.y - m_Pos.y)*(Position.y - m_Pos.y)), 160 * (Position.y - m_Pos.y) / sqrt((Position.x - m_Pos.x)*(Position.x - m_Pos.x) + (Position.y - m_Pos.y)*(Position.y - m_Pos.y)));
-        
-        /*if (m_pClient->m_pControls->m_InputData.m_Fire) {
-            enemyPos = GetGrenadeAngle(m_Pos, enemyPos) + m_Pos;
-        }*/
 
         vec2 Direction = direction(angle(enemyPos));
 
@@ -131,19 +125,11 @@ void CBot::OnRender()
 
         if (Hit || OtherTeam) continue;
 
-        //bool exists = std::find(std::begin(ids), std::end(ids), i) != std::end(ids);
-
-        if(distance(m_Pos, Position) <= m_pClient->m_Tuning.m_HookLength*2/* && !exists*/)
+        if(distance(m_Pos, Position) <= m_pClient->m_Tuning.m_HookLength*2)
         {
             if (length(m_Vel*50) >= g_Config.m_ClAimBotLimit/2) {
                 m_pClient->m_pControls->m_MousePos = enemyPos;
-                /*if (length(m_Vel*50) >= 100) {
-                    m_pClient->m_pControls->m_InputData.m_Hook = true;
-                }*/
             }
-            //ids[i] = i;
-        /*} else if (exists) {
-            std::remove(std::begin(ids), std::end(ids), i);*/
         }
     }
 }

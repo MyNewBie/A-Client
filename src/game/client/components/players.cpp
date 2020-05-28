@@ -68,7 +68,7 @@ void CPlayers::RenderHook(
 	RenderInfo.m_Size = 64.0f;
 
 	// use preditect players if needed
-	if(m_pClient->m_LocalClientID == ClientID && g_Config.m_ClPredict && Client()->State() != IClient::STATE_DEMOPLAYBACK)
+	if(Local && g_Config.m_ClPredict && Client()->State() != IClient::STATE_DEMOPLAYBACK)
 	{
 		if(!m_pClient->m_Snap.m_pLocalCharacter ||
 			(m_pClient->m_Snap.m_pGameData && m_pClient->m_Snap.m_pGameData->m_GameStateFlags&(GAMESTATEFLAG_PAUSED|GAMESTATEFLAG_ROUNDOVER|GAMESTATEFLAG_GAMEOVER)))
@@ -401,13 +401,16 @@ void CPlayers::RenderPlayer(
         
 	// draw gun
     {
+		if (g_Config.m_ClShowHookColl) {
+
+		
         float Alpha = 1.0f;
         if (OtherTeam)
             Alpha = g_Config.m_ClShowOthersAlpha / 100.0f;
 
         vec2 ExDirection = Direction;
 
-        if (m_pClient->m_LocalClientID == ClientID && Client()->State() != IClient::STATE_DEMOPLAYBACK)
+        if (Local && Client()->State() != IClient::STATE_DEMOPLAYBACK)
             ExDirection = normalize(vec2(m_pClient->m_pControls->m_InputData.m_TargetX, m_pClient->m_pControls->m_InputData.m_TargetY));
 
         vec2 initPos = Position;
@@ -464,6 +467,8 @@ void CPlayers::RenderPlayer(
         Graphics()->LinesDraw(&LineItem, 1);
         Graphics()->LinesEnd();
         
+		}
+
 		Graphics()->TextureSet(g_pData->m_aImages[IMAGE_GAME].m_Id);
 		Graphics()->QuadsBegin();
 		Graphics()->QuadsSetRotation(State.GetAttach()->m_Angle*pi*2+Angle);

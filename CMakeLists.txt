@@ -99,7 +99,7 @@ set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
   src/game/version.h
 )
 
-set(CLIENT_EXECUTABLE teeworlds CACHE STRING "Name of the build client executable")
+set(CLIENT_EXECUTABLE a-client CACHE STRING "Name of the build client executable")
 
 ########################################################################
 # Download dependencies
@@ -317,7 +317,6 @@ find_package(SDL2)
 find_package(Threads)
 find_package(Wavpack)
 
-
 if(TARGET_OS AND TARGET_OS STREQUAL "mac")
   find_program(CMAKE_OTOOL otool)
   find_program(DMG dmg)
@@ -337,7 +336,7 @@ if(TARGET_OS AND TARGET_OS STREQUAL "mac")
   endif()
 endif()
 
-message(STATUS "******** Teeworlds ********")
+message(STATUS "******** A-Client ********")
 message(STATUS "Target OS: ${TARGET_OS} ${TARGET_BITS}bit")
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER}")
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
@@ -1097,24 +1096,6 @@ set(EXPECTED_DATA
   "ui/themes/jungle_night.map"
   "ui/themes/none.png"
 )
-
-if(NOT EXISTS ${PROJECT_SOURCE_DIR}/data/languages/index.json)
-  message(WARNING "Missing data/languages submodule. Please download a source release or update your git submodules with `git submodule update --init`")
-  foreach(item ${EXPECTED_DATA})
-    if(item MATCHES "^languages/")
-      list(REMOVE_ITEM EXPECTED_DATA ${item})
-    endif()
-  endforeach()
-endif()
-
-if(NOT EXISTS ${PROJECT_SOURCE_DIR}/data/maps/dm1.map)
-  message(WARNING "Missing data/maps submodule. Please download a source release or update your git submodules with `git submodule update --init`")
-  foreach(item ${EXPECTED_DATA})
-    if(item MATCHES "^maps/")
-      list(REMOVE_ITEM EXPECTED_DATA ${item})
-    endif()
-  endforeach()
-endif()
 
 # set_glob(DATA GLOB_RECURSE "json;map;png;rules;ttf;txt;wv" data ${EXPECTED_DATA})
 set_glob(DATA GLOB_RECURSE "json;map;png;rules;ttf;txt;wv" data)

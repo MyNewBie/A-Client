@@ -24,9 +24,6 @@ def write_tga(f, w, h, bpp, data):
 	f.write(struct.pack("<BBBHHBHHHHBB", 0, 0, 2, 0, 0, 0, 0, 0, w, h, bpp, 0) + data)
 
 
-
-
-
 def load_png(f):
 	def read(fmt): return struct.unpack("!"+fmt, f.read(struct.calcsize("!"+fmt)))
 	def skip(count): f.read(count)

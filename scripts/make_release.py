@@ -20,7 +20,7 @@ if options.source_dir != None:
 
 valid_platforms = ["win32", "win64", "osx", "linux_x86", "linux_x86_64", "src"]
 
-name = "teeworlds"
+name = "a-client"
 version = sys.argv[1]
 platform = sys.argv[2]
 exe_ext = ""
@@ -204,45 +204,6 @@ if use_bundle:
 </plist>
 	""" % (version))
 	open(os.path.join(clientbundle_content_dir, "PkgInfo"), "w").write("APPL????")
-
-	# create Teeworlds Server appfolder
-	serverbundle_content_dir = os.path.join(package_dir, "Teeworlds Server.app/Contents")
-	serverbundle_bin_dir = os.path.join(serverbundle_content_dir, "MacOS")
-	serverbundle_resource_dir = os.path.join(serverbundle_content_dir, "Resources")
-	os.mkdir(os.path.join(package_dir, "Teeworlds Server.app"))
-	os.mkdir(serverbundle_content_dir)
-	os.mkdir(serverbundle_bin_dir)
-	os.mkdir(serverbundle_resource_dir)
-	os.mkdir(os.path.join(serverbundle_resource_dir, "data"))
-	os.mkdir(os.path.join(serverbundle_resource_dir, "data/maps"))
-	os.mkdir(os.path.join(serverbundle_resource_dir, "data/mapres"))
-	copy_tree(maps_dir, serverbundle_resource_dir+"/data/maps")
-	shutil.copy("other/icons/Teeworlds_srv.icns", serverbundle_resource_dir)
-	shutil.copy(source_package_dir+name+"_srv"+exe_ext, serverbundle_bin_dir)
-	shutil.copy(source_package_dir+"serverlaunch"+exe_ext, serverbundle_bin_dir + "/"+name+"_server")
-	open(os.path.join(serverbundle_content_dir, "Info.plist"), "w").write("""
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
-	<key>CFBundleExecutable</key>
-	<string>teeworlds_server</string>
-	<key>CFBundleIconFile</key>
-	<string>Teeworlds_srv</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>%s</string>
-</dict>
-</plist>
-	""" % (version))
-	open(os.path.join(serverbundle_content_dir, "PkgInfo"), "w").write("APPL????")
 
 if use_zip:
 	print("making zip archive")

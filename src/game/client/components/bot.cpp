@@ -123,9 +123,9 @@ void CBot::OnRender()
             Direction.y = round_to_int(Direction.y*256.0f) / 256.0f;
         } while (!doBreak);
 
-        if (Hit || OtherTeam) continue;
+        if (Hit) continue;
 
-        if(distance(m_Pos, Position) <= m_pClient->m_Tuning.m_HookLength*2)
+        if(distance(m_Pos, Position) <= g_Config.m_ClAimBotDistance)
         {
             if (length(m_Vel*50) > g_Config.m_ClAimBotLimit) {
                 m_pClient->m_pControls->m_MousePos = enemyPos;

@@ -14,6 +14,7 @@ MACRO_CONFIG_INT(ClDummyResetOnSwitch, cl_dummy_resetonswitch, 0, 0, 2, CFGFLAG_
 MACRO_CONFIG_INT(ClDummyCopyMoves, cl_dummy_copy_moves, 0, 0, 1, CFGFLAG_CLIENT, "Wether dummy should copy your moves")
 
 // client
+MACRO_CONFIG_INT(ClAimBotDistance, cl_aimbot_distance, 420, 380, 600, CFGFLAG_CLIENT, "AimBot detect distance")
 MACRO_CONFIG_INT(ClShowHookColl, cl_show_hook_coll, 0, 0, 1, CFGFLAG_CLIENT | CFGFLAG_SAVE, "Hook colls")
 MACRO_CONFIG_INT(ClAimBotLimit, cl_aimbot_limit, 100, 0, 1000, CFGFLAG_CLIENT|CFGFLAG_SAVE, "AimBot Limit")
 MACRO_CONFIG_INT(ClAimBot, cl_aimbot, 0, 0, 1, CFGFLAG_CLIENT|CFGFLAG_SAVE, "AimBot")

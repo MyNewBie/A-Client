@@ -127,7 +127,7 @@ void CBot::OnRender()
 
         if(distance(m_Pos, Position) <= m_pClient->m_Tuning.m_HookLength*2)
         {
-            if (length(m_Vel*50) >= g_Config.m_ClAimBotLimit/2) {
+            if (length(m_Vel*50) > g_Config.m_ClAimBotLimit) {
                 m_pClient->m_pControls->m_MousePos = enemyPos;
             }
         }

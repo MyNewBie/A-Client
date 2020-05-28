@@ -8,16 +8,25 @@ class CScoreboard : public CComponent
 {
 	void RenderGoals(float x, float y, float w);
 	float RenderSpectators(float x, float y, float w);
-	float RenderScoreboard(float x, float y, float w, int Team, const char *pTitle, int Align);
+	float RenderScoreboard(float x, float y, float w, int Team, const char* pTitle, int Align);
 	void RenderRecordingNotification(float x);
 
-	static void ConKeyScoreboard(IConsole::IResult *pResult, void *pUserData);
+	static void ConKeyScoreboard(IConsole::IResult* pResult, void* pUserData);
 
-	const char *GetClanName(int Team);
+	const char* GetClanName(int Team);
 
 	bool m_Active;
 	bool m_Activate;
- 	class CUIRect m_TotalRect;
+	class CUIRect m_TotalRect;
+
+	enum {
+		TEAM_UPPER16 = -3,
+		TEAM_LOWER32 = -4,
+		TEAM_UPPER32 = -5,
+		TEAM_LOWER16 = -6,
+		TEAM_LOWER24 = -7,
+		TEAM_UPPER24 = -8,
+	};
 
 public:
 	CScoreboard();
@@ -25,10 +34,10 @@ public:
 	virtual void OnConsoleInit();
 	virtual void OnRender();
 	virtual void OnRelease();
-	
- 	bool IsActive() const;
+
+	bool IsActive() const;
 	void ResetPlayerStats(int ClientID);
- 	class CUIRect GetScoreboardRect() const { return m_TotalRect; }
+	class CUIRect GetScoreboardRect() const { return m_TotalRect; }
 };
 
 #endif

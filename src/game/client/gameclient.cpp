@@ -463,9 +463,65 @@ void CGameClient::OnUpdate()
 	}
 }
 
-int CGameClient::OnSnapInput(int *pData)
+/*void CGameClient::OnDummySwap()
 {
-	return m_pControls->SnapInput(pData);
+	if (Config()->m_ClDummyResetOnSwitch)
+	{
+		int PlayerOrDummy = (Config()->m_ClDummyResetOnSwitch == 2) ? Config()->m_ClDummy : (!Config()->m_ClDummy);
+		m_pControls->ResetInput(PlayerOrDummy);
+		m_pControls->m_InputData[PlayerOrDummy].m_Hook = 0;
+	}
+	int tmp = m_DummyInput.m_Fire;
+	m_DummyInput = m_pControls->m_InputData[Config()->m_ClDummy];
+	m_pControls->m_InputData[!Config()->m_ClDummy].m_Fire = tmp;
+}*/
+
+int CGameClient::OnSnapInput(int *pData/*, bool Dummy, bool Force*/)
+{
+	//m_LocalIDs[Config()->m_ClDummy] = Client()->GetLocalClientID(Config()->m_ClDummy);
+
+	//if (!Dummy)
+	{
+		return m_pControls->SnapInput(pData);
+	}
+
+	/*if (!Config()->m_ClDummyHammer)
+	{
+		if (m_DummyFire != 0)
+		{
+			m_DummyInput.m_Fire = m_HammerInput.m_Fire;
+			m_DummyFire = 0;
+		}
+
+		if (!Force && (!m_DummyInput.m_Direction && !m_DummyInput.m_Jump && !m_DummyInput.m_Hook))
+		{
+			return 0;
+		}
+
+		mem_copy(pData, &m_DummyInput, sizeof(m_DummyInput));
+		return sizeof(m_DummyInput);
+	}
+	else
+	{
+		if ((m_DummyFire / 12.5) - (int)(m_DummyFire / 12.5) > 0.01)
+		{
+			m_DummyFire++;
+			return 0;
+		}
+		m_DummyFire++;
+
+		m_HammerInput.m_Fire += 2;
+		m_HammerInput.m_WantedWeapon = 1;
+
+		vec2 Main = m_LocalCharacterPos;
+		vec2 Dummy = m_aClients[m_LocalIDs[!Config()->m_ClDummy]].m_Predicted.m_Pos;
+		vec2 Dir = Main - Dummy;
+		m_HammerInput.m_TargetX = Dir.x;
+		m_HammerInput.m_TargetY = Dir.y;
+
+		mem_copy(pData, &m_HammerInput, sizeof(m_HammerInput));
+		return sizeof(m_HammerInput);
+	}*/
 }
 
 void CGameClient::OnConnected()
@@ -1382,6 +1438,17 @@ void CGameClient::OnNewSnapshot()
 				m_Snap.m_aInfoByScore[i] = m_Snap.m_aInfoByScore[i+1];
 				m_Snap.m_aInfoByScore[i+1] = Tmp;
 			}
+		}
+	}
+
+	// sort player infos by DDRace Team (and score between)
+	int Index = 0;
+	for (int Team = 0; Team <= MAX_CLIENTS; ++Team)
+	{
+		for (int i = 0; i < MAX_CLIENTS && Index < MAX_CLIENTS; ++i)
+		{
+			if (m_Snap.m_aInfoByScore[i].m_pPlayerInfo && m_Teams.Team(m_Snap.m_aInfoByScore[i].m_ClientID) == Team)
+				m_Snap.m_paInfoByDDTeam[Index++] = m_Snap.m_aInfoByScore[i];
 		}
 	}
 

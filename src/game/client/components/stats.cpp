@@ -3,7 +3,6 @@
 #include <engine/graphics.h>
 #include <engine/serverbrowser.h>
 #include <game/client/animstate.h>
-#include <game/client/components/announcers.h>
 #include <game/client/components/menus.h>
 #include <game/client/components/sounds.h>
 #include <game/client/gameclient.h>
@@ -117,7 +116,6 @@ void CStats::OnMessage(int MsgType, void *pRawMsg)
 			char aBuf[64];
 			str_format(aBuf, sizeof(aBuf), "Ended (%d kills)", pStats[pMsg->m_Victim].m_CurrentSpree);
 			m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_HOLYSHIT, 0);
-					m_pClient->m_pAnnouncers->Announce("HOLY SHIT", aBuf, 2.0f);
 		}			
 			
 		// Humiliation is not about selfkilling
@@ -130,7 +128,6 @@ void CStats::OnMessage(int MsgType, void *pRawMsg)
 			if(pStats[pMsg->m_Victim].m_CurrentHumiliation % 7 == 0)
 			{
 				m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_HUMILIATION, 0);
-				m_pClient->m_pAnnouncers->Announce("HUMILIATION", "Killed 7 times in a row", 3.5f);
 			}
 		}
 		
@@ -155,27 +152,21 @@ void CStats::OnMessage(int MsgType, void *pRawMsg)
 				{
 				case 0:
 					m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_KILLING, 0);
-					m_pClient->m_pAnnouncers->Announce("KILLING SPREE", "5 kills in a row", 3.5f);
 					break;
 				case 1:
 					m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_RAMPAGE, 0);
-					m_pClient->m_pAnnouncers->Announce("RAMPAGE", "10 kills in a row", 1.5f);
 					break;
 				case 2:
 					m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_DOMINATING, 0);
-					m_pClient->m_pAnnouncers->Announce("DOMINATING", "15 kills in a row", 3.0f);
 					break;
 				case 3:
 					m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_UNSTOPPABLE, 0);
-					m_pClient->m_pAnnouncers->Announce("UNSTOPPABLE", "20 kills in a row", 3.0f);
 					break;
 				case 4:
 					m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_GODLIKE, 0);
-					m_pClient->m_pAnnouncers->Announce("GODLIKE", "25 kills in a row", 2.5f);
 					break;
 				case 5:
 					m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_WICKEDSICK, 0);
-					m_pClient->m_pAnnouncers->Announce("WICKED SICK", "30 kills in a row", 1.8f);
 					break;
 				}
 			}

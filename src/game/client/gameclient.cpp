@@ -24,7 +24,6 @@
 
 #include "gameclient.h"
 
-#include "components/announcers.h"
 #include "components/binds.h"
 #include "components/bot.h"
 #include "components/broadcast.h"
@@ -99,7 +98,6 @@ static CInfoMessages gs_InfoMessages;
 static CCamera gs_Camera;
 static CChat gs_Chat;
 static CMotd gs_Motd;
-static CAnnouncers gs_Announcers;
 static CBroadcast gs_Broadcast;
 static CGameConsole gs_GameConsole;
 static CBinds gs_Binds;
@@ -228,7 +226,6 @@ void CGameClient::OnConsoleInit()
 	m_pBlacklist = Kernel()->RequestInterface<IBlacklist>();
 
 	// setup pointers
-	m_pAnnouncers = &::gs_Announcers;
 	m_pBinds = &::gs_Binds;
     m_pBot = &::gs_Bot;
 	m_pBroadcast = &::gs_Broadcast;
@@ -248,7 +245,7 @@ void CGameClient::OnConsoleInit()
 	m_pMapimages = &::gs_MapImages;
 	m_pEntities = &::gs_Entities;
 	m_pVoting = &::gs_Voting;
-	// m_pHud = &::gs_Hud; // for announcers
+	// m_pHud = &::gs_Hud;
 	m_pScoreboard = &::gs_Scoreboard;
 	m_pItems = &::gs_Items;
 	m_pMapLayersBackGround = &::gs_MapLayersBackGround;
@@ -289,7 +286,6 @@ void CGameClient::OnConsoleInit()
 	m_All.Add(&gs_InfoMessages);
 	m_All.Add(m_pChat);
 	m_All.Add(&gs_Broadcast);
-	m_All.Add(m_pAnnouncers);
 	m_All.Add(&gs_DebugHud);
 	m_All.Add(&gs_Notifications);
 	m_All.Add(&gs_Scoreboard);

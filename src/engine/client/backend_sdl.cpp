@@ -88,7 +88,6 @@ void CGraphicsBackend_Threaded::WaitForIdle()
 		m_BufferDone.wait();
 }
 
-
 // ------------ CCommandProcessorFragment_General
 
 void CCommandProcessorFragment_General::Cmd_Signal(const CCommandBuffer::SCommand_Signal *pCommand)

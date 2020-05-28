@@ -194,31 +194,6 @@ void CMenus::RenderSettingsGamerGeneral(CUIRect MainView)
 
 	NewLine();
 	NewLine();
-	UI()->DoLabel(&Button, Localize("Instashield"), 14.0f, CUI::ALIGN_LEFT);
-	NewLine();
-	DoButton_BinaryCheckBox(&g_Config.m_ClShieldDisplay, "Display prettier shield graphics", &Button);
-	
-	NewLine();
-	NewLine();
-	UI()->DoLabel(&Button, Localize("Announcers"), 14.0f, CUI::ALIGN_LEFT);
-	NewLine();
-	DoButton_BinaryCheckBox(&g_Config.m_ClAnnouncers, "Visual announcers", &Button);
-	NewLine();
-	if(DoButton_CheckBox(&g_Config.m_ClGSound, Localize("Play announcer sounds"), g_Config.m_ClGSound, &Button))
-		g_Config.m_ClGSound ^= 1;
-		
-	Button.VSplitLeft(185.0f, 0, &Button);
-	Button.VSplitLeft(140.0f, &Button, 0);
-	static CButtonContainer s_TestButton;
-	if(DoButton_Menu(&s_TestButton, "Test one!", 0, &Button))
-	{
-		int sounds[11] = {SOUND_SPREE_HUMILIATION, SOUND_SPREE_KILLING, SOUND_SPREE_RAMPAGE, SOUND_SPREE_DOMINATING, SOUND_SPREE_UNSTOPPABLE, SOUND_SPREE_GODLIKE,
-		SOUND_SPREE_WICKEDSICK, SOUND_SPREE_PREPARETOFIGHT, SOUND_SPREE_PREPARETOKILL, SOUND_SPREE_HOLYSHIT, SOUND_SPREE_FIRSTBLOOD};
-		m_pClient->m_pSounds->Play(CSounds::CHN_GUI, sounds[rand()%11], 0);
-	}	
-
-	NewLine();
-	NewLine();
 	UI()->DoLabel(&Button, Localize("Misc"), 14.0f, CUI::ALIGN_LEFT);
 	NewLine();
 	DoButton_BinaryCheckBox(&g_Config.m_ClPingGraph, "Show network graph next to ping in scoreboard", &Button);

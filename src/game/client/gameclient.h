@@ -347,7 +347,6 @@ public:
 	void SendSkinChange();
 
 	// pointers to all systems
-	class CAnnouncers *m_pAnnouncers;
 	class CGameConsole *m_pGameConsole;
 	class CBinds *m_pBinds;
     class CBot *m_pBot;

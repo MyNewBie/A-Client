@@ -14,6 +14,7 @@
 #include <generated/protocol.h>
 #include <generated/client_data.h>
 
+#include <game/client/gameclient.h>
 #include <game/client/animstate.h>
 #include <game/client/gameclient.h>
 #include <game/client/render.h>
@@ -22,6 +23,7 @@
 
 #include "menus.h"
 #include "motd.h"
+#include "sounds.h"
 #include "voting.h"
 
 void CMenus::GetSwitchTeamInfo(CSwitchTeamInfo *pInfo)
@@ -241,6 +243,7 @@ void CMenus::RenderGame(CUIRect MainView)
 		}
 		else */if (DoButton_Menu(&s_DummyButton, Localize("Connect dummy"), 0, &Button))
 		{
+			m_pClient->m_pSounds->Play(CSounds::CHN_GUI, SOUND_SPREE_HOLYSHIT, 0);
 			/*if (!Client()->DummyConnected())
 			{
 				Client()->DummyConnect();

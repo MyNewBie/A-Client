@@ -18,7 +18,6 @@
 
 #include "skins.h"
 
-
 // component to fetch keypresses, override all other input
 class CMenusKeyBinder : public CComponent
 {
